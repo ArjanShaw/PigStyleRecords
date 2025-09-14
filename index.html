@@ -5,9 +5,10 @@
 	<meta charset="UTF-8">
 	<title>Gotta Love That Pig</title>
 	<link rel="stylesheet" href="css/style.css" type="text/css">
+
 	<script>
 
-		function movePigStyleText() {
+ 		function movePigStyleText() {
 			const img = document.getElementById("pigstyle-text");
  			img.style.top = '0';
 			img.style.left = '50%';
@@ -49,7 +50,19 @@
 			imgRecord.style.bottom =   '200px';
 
 		}
+		function center(id) {
+			const hdrs = document.getElementById(id);
+			
+			const { innerWidth, innerHeight } = window;
+			const { offsetWidth, offsetHeight } = hdrs;
 
+			hdrs.style.left = (innerWidth - offsetWidth) / 2 + "px";
+			hdrs.style.top = (innerHeight - offsetHeight) / 2 + "px";
+
+   
+		}
+
+ 
 		function resize(){
 
 			resizeImage();
@@ -57,11 +70,43 @@
 			movePigStyleText();
 			moveRecordsText();
 			moveyellowrecord();
-		}
+			center("headers");
+			 
 
+		}
+		function addPopupFunctionality() {
+
+			
+
+			const openModal = document.getElementById("vinyls-link");
+ 
+
+			const closeBtn = document.getElementById("closeBtn");
+			const modalOverlay = document.getElementById("modalOverlay");
+
+
+			modalOverlay.style.display = 'none';  
+			 
+			closeBtn.addEventListener("click", function() {
+				modalOverlay.style.display = 'none'; // hide the modal
+			});
+
+
+			openModal.addEventListener("click", function(event) {
+				alert("clicked");
+				event.preventDefault();          
+				modalOverlay.style.display = '';  
+			});
+			 
+		}
 		// Resize on load and on window resize
 		window.addEventListener("load", resize);
 		window.addEventListener("resize", resize);
+
+
+		window.addEventListener("load", addPopupFunctionality);
+		  
+
 	</script>
 
 </head>
@@ -70,8 +115,46 @@
 			 <img id="mainImage"  src="images/background.png" alt="logo">
 			 <img id="pighead"  src="images/pig_head.png" alt="logo">
 			 <img id="pigstyle-text"  src="images/pigstyle_text.png" alt="logo">
-			 <img id="records-text"  src="images/records_text.png" alt="logo">
+			 <img id="records-text"  style="width: 800px;" src="images/records_text.png" alt="logo">
 			 <img id="yellow-record"  src="images/yellow-record.png" alt="logo">
+
+
+
+			<!-- Modal structure -->
+			<div id="modalOverlay">
+				<div id="modalBox">
+				<h1>Hello! This is your popup</h1>
+				<button id="closeBtn">Close</button>
+				</div>
+			</div>
+
+			 
+
+			<div id ="headers" 
+				style="font-size: 40px; color: white; position: absolute;" 
+				class="header">
+				<div>
+					<ul>
+						<li>
+							<a id="vinyls-link" >Pick some new or used vinyls,</a>
+						</li>
+						<li >
+							<a >or whatever works for you,</a>
+						</li>
+						<li class="selected">
+							<a >while kicking back,</a>
+						</li>
+						<li >
+							<a >and soaking up art,</a>
+						</li>
+						<li >
+							<a >right here</a>
+						</li>
+					</ul>
+					
+				</div>
+			</div>
+
 	</div>
 	 
 </body>
