@@ -47,3 +47,13 @@ body, html {
     padding: 5px 10px;
     cursor: pointer;
   }
+
+  #storeInfo {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: white;
+  font-size: 24px;
+  text-align: center;
+}

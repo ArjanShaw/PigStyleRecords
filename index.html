@@ -5,6 +5,7 @@
 	<meta charset="UTF-8">
 	<title>Gotta Love That Pig</title>
 	<link rel="stylesheet" href="css/style.css" type="text/css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
 	<script>
 
@@ -16,10 +17,12 @@
 		}
 
 		function moveRecordsText() {
-			const img = document.getElementById("records-text");
-			img.style.bottom = '0';
-			img.style.left = '50%';
-			img.style.transform = 'translateX(-50%)'; 
+			const imgRecordText = document.getElementById("records-text");
+			const imgPigStyleText = document.getElementById("pigstyle-text");
+
+			imgRecordText.style.top = imgPigStyleText.offsetTop + imgPigStyleText.offsetHeight + 20 + 'px';
+			imgRecordText.style.left = '50%';
+			imgRecordText.style.transform = 'translateX(-50%)'; 
 		}
 
 		function movePigHead() {
@@ -50,15 +53,16 @@
 			imgRecord.style.bottom =   '200px';
 
 		}
-		function center(id) {
-			const hdrs = document.getElementById(id);
+		function moveBulletedList(id) {
 			
-			const { innerWidth, innerHeight } = window;
-			const { offsetWidth, offsetHeight } = hdrs;
+			const imgRecordText = document.getElementById("records-text");
+			const hdrs = document.getElementById("headers");
 
-			hdrs.style.left = (innerWidth - offsetWidth) / 2 + "px";
-			hdrs.style.top = (innerHeight - offsetHeight) / 2 + "px";
+			hdrs.style.top = imgRecordText.offsetTop + imgRecordText.offsetHeight + 20 + 'px';
+			hdrs.style.left = '50%';
+			hdrs.style.transform = 'translateX(-50%)'; 
 
+			
    
 		}
 
@@ -70,54 +74,60 @@
 			movePigStyleText();
 			moveRecordsText();
 			moveyellowrecord();
-			center("headers");
+			moveBulletedList();
 			 
 
 		}
 		function setupPopup() {
-			const links = document.querySelectorAll('.popup-link');
-			const overlay = document.getElementById('vinylOverlay');
-			const modalBox = document.getElementById('modalBox');
-			const titleElem = document.getElementById('modalTitle');
-			const contentElem = document.getElementById('modalContent');
-			const closeBtn = document.getElementById('closeBtn');
+  const links = document.querySelectorAll('.popup-link');
+  const overlay = document.getElementById('vinylOverlay');
+  const modalBox = document.getElementById('modalBox');
+  const titleElem = document.getElementById('modalTitle');
+  const contentElem = document.getElementById('modalContent');
+  const imageElem = document.getElementById('modalImage');
+  const closeBtn = document.getElementById('closeBtn');
 
-			overlay.style.display = 'none';
+  overlay.style.display = 'none';
 
-			links.forEach(link => {
-				link.addEventListener('click', function(e) {
-				e.preventDefault();
+  links.forEach(link => {
+    link.addEventListener('click', function(e) {
+      e.preventDefault();
 
-				// Update popup content based on link
-				const text = this.getAttribute('data-content');
-				titleElem.textContent = "Info"; // optional: change per link
-				contentElem.textContent = text;
+      // Get custom content from data attributes
+      const title = this.dataset.title;
+      const content = this.dataset.content;
+      const imgSrc = this.dataset.img;
 
-				// Show overlay
-				overlay.style.display = 'flex';
+      // Update modal elements
+      titleElem.textContent = title;
+      contentElem.textContent = content;
+      imageElem.src = imgSrc;
 
-				// Center the modal box
-				const { innerWidth, innerHeight } = window;
-				const { offsetWidth, offsetHeight } = modalBox;
-				modalBox.style.position = 'fixed';
-				modalBox.style.left = (innerWidth - offsetWidth)/2 + 'px';
-				modalBox.style.top = (innerHeight - offsetHeight)/2 + 'px';
-				});
-			});
+      // Show overlay
+      overlay.style.display = 'flex';
 
-			// Close button
-			closeBtn.addEventListener('click', () => {
-				overlay.style.display = 'none';
-			});
+      // Center modal
+      const { innerWidth, innerHeight } = window;
+      const { offsetWidth, offsetHeight } = modalBox;
+      modalBox.style.position = 'fixed';
+      modalBox.style.left = (innerWidth - offsetWidth)/2 + 'px';
+      modalBox.style.top = (innerHeight - offsetHeight)/2 + 'px';
+    });
+  });
 
-			// Optional: click outside modal to close
-			overlay.addEventListener('click', (e) => {
-				if (e.target === overlay) overlay.style.display = 'none';
-			});	
-		}
+  // Close button
+  closeBtn.addEventListener('click', () => {
+    overlay.style.display = 'none';
+  });
 
-		// Initialize on load
-		window.addEventListener('load', setupPopup);
+  // Close when clicking outside modal
+  overlay.addEventListener('click', (e) => {
+    if (e.target === overlay) overlay.style.display = 'none';
+  });
+}
+
+window.addEventListener('load', setupPopup);
+
 
 	 
 		// Resize on load and on window resize
@@ -138,29 +148,85 @@
 		<img style="position: absolute;" id="records-text"  style="width: 800px;" src="images/records_text.png" alt="logo">
 		<img style="position: absolute;" id="yellow-record"  src="images/yellow-record.png" alt="logo">
 
- 
+		
+
 
 		<div id="headers" style="font-size: 40px; color: white; position: absolute;" class="header">
-		<div>
-			<ul>
-			<li><a class="popup-link" data-content="Check out our collection of vinyl records, featuring a wide range of genres and artists.">Pick some new or used vinyls,</a></li>
-			<li><a class="popup-link" data-content="We also buy your vinyl records if you want to sell.">or whatever works for you,</a></li>
-			<li><a class="popup-link" data-content="We do consignment, selling your records for a commission.">while kicking back,</a></li>
-			<li><a class="popup-link" data-content="Enjoy the art and music together.">and soaking up art,</a></li>
-			<li><a class="popup-link" data-content="Visit us here for more info.">right here</a></li>
-			</ul>
-		</div>
+			<div>
+				<ul>
+				<li>
+					<a class="popup-link" 
+					data-title="Vinyl Records" 
+					data-content="Check out our collection of vinyl records, featuring a wide range of genres and artists." 
+					data-img="images/vinyl_records.jpg">
+					Pick some new or used vinyls,
+					</a>
+				</li>
+				<li>
+					<a class="popup-link" 
+					data-title="Cassettes" 
+					data-content="We also have a selection of classic cassette tapes for collectors." 
+					data-img="images/cassette-tapes.png">
+					or whatever works for you,
+					</a>
+				</li>
+				<li>
+					<a class="popup-link" 
+					data-title="Relaxing Spot" 
+					data-content="Enjoy the music in our comfortable recliners while you browse." 
+					data-img="images/recliner.png">
+					while kicking back,
+					</a>
+				</li>
+				<li>
+					<a class="popup-link" 
+					data-title="Visit Us" 
+					data-content="I am looking for cooperations with local artists to display their work in the store." 
+					data-img="images/art-in-record-store.png">
+					and soaking up art
+					</a>
+				</li>
+				<!-- <li>
+					<a class="popup-link" 
+					data-title="Visit Us" 
+					data-content="Address: 123 Music Lane, Vinyl City, VC 45678. Open Mon-Sat 10am-8pm, Sun 12pm-6pm." 
+					data-img="images/record-store-exterior.jpg">
+					check it out,
+					</a>
+				</li> -->
+				</ul>
+			</div>
 		</div>
 
-		
-		<div class="modalOverlay" id="vinylOverlay">
-		<div id="modalBox">
-			<h1 id="modalTitle">Title</h1>
-			<p id="modalContent">Content goes here</p>
-			<img src="images/vinyl_records.jpg" style="width: 95%; height:auto;" alt="Vinyl">
-			<button id="closeBtn">Close</button>
+				<div id="storeInfo" style="position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); color: white; font-size: 24px; text-align: center;">
+			<p id="storeAddress">Address: 123 Music Lane, Vinyl City, VC 45678</p>
+			<p id="storeHours">Hours: Mon-Sat 10am - 8pm, Sun 12pm - 6pm</p>
+
+			<div id="socialIcons" style="margin-top: 10px;">
+  <a href="#" target="_blank" style="color: white; margin: 0 15px; font-size: 36px; text-decoration: none;">
+    <i class="fab fa-facebook"></i>
+  </a>
+  <a href="#" target="_blank" style="color: white; margin: 0 15px; font-size: 36px; text-decoration: none;">
+    <i class="fab fa-instagram"></i>
+  </a>
+</div>
+
+
 		</div>
-		</div>
+
+
+<!-- Single reusable modal -->
+<div class="modalOverlay" id="vinylOverlay">
+  <div id="modalBox">
+    <h1 id="modalTitle">Title</h1>
+    <p id="modalContent">Content goes here</p>
+    <img id="modalImage" src="" style="width: 95%; height:auto;" alt="Popup Image">
+    <button id="closeBtn">Close</button>
+  </div>
+</div>
+
+
+		 
 
 
 			 
