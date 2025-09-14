@@ -74,50 +74,57 @@
 			 
 
 		}
-		function addPopupFunctionality(id) {
+		function setupPopup() {
+			const links = document.querySelectorAll('.popup-link');
+			const overlay = document.getElementById('vinylOverlay');
+			const modalBox = document.getElementById('modalBox');
+			const titleElem = document.getElementById('modalTitle');
+			const contentElem = document.getElementById('modalContent');
+			const closeBtn = document.getElementById('closeBtn');
 
-			
+			overlay.style.display = 'none';
 
-			const openModal = document.getElementById("vinyls-link");
- 
+			links.forEach(link => {
+				link.addEventListener('click', function(e) {
+				e.preventDefault();
 
-			const closeBtn = document.getElementById("closeBtn");
-			const modalOverlayElem = document.getElementById(id);
+				// Update popup content based on link
+				const text = this.getAttribute('data-content');
+				titleElem.textContent = "Info"; // optional: change per link
+				contentElem.textContent = text;
 
+				// Show overlay
+				overlay.style.display = 'flex';
 
-			modalOverlayElem.style.display = 'none';  
-			 
-			closeBtn.addEventListener("click", function() {
-				modalOverlayElem.style.display = 'none'; // hide the modal
-			});
-
-
-			openModal.addEventListener("click", function(event) {
-				event.preventDefault();          
-				modalOverlayElem.style.display = '';  
-
-				// Move modal box to center of viewport
+				// Center the modal box
 				const { innerWidth, innerHeight } = window;
 				const { offsetWidth, offsetHeight } = modalBox;
-
-
-				
 				modalBox.style.position = 'fixed';
-				modalBox.style.left = (innerWidth - offsetWidth) / 2 + 'px';
-				modalBox.style.top = (innerHeight - offsetHeight) / 2 + 'px';
-
+				modalBox.style.left = (innerWidth - offsetWidth)/2 + 'px';
+				modalBox.style.top = (innerHeight - offsetHeight)/2 + 'px';
+				});
 			});
 
-			 
-				
-			 
+			// Close button
+			closeBtn.addEventListener('click', () => {
+				overlay.style.display = 'none';
+			});
+
+			// Optional: click outside modal to close
+			overlay.addEventListener('click', (e) => {
+				if (e.target === overlay) overlay.style.display = 'none';
+			});	
 		}
+
+		// Initialize on load
+		window.addEventListener('load', setupPopup);
+
+	 
 		// Resize on load and on window resize
 		window.addEventListener("load", resize);
 		window.addEventListener("resize", resize);
 
 
-		window.addEventListener("load", () => addPopupFunctionality('vinylOverlay'));
 		  
 
 	</script>
@@ -125,67 +132,38 @@
 </head>
 <body>
 	<div class="fullscreen-img-container">
-			 <img style="position: absolute;" id="mainImage"  src="images/background.png" alt="logo">
-			 <img style="position: absolute;"id="pighead"  src="images/pig_head.png" alt="logo">
-			 <img style="position: absolute;" id="pigstyle-text"  src="images/pigstyle_text.png" alt="logo">
-			 <img style="position: absolute;" id="records-text"  style="width: 800px;" src="images/records_text.png" alt="logo">
-			 <img style="position: absolute;" id="yellow-record"  src="images/yellow-record.png" alt="logo">
+		<img style="position: absolute;" id="mainImage"  src="images/background.png" alt="logo">
+		<img style="position: absolute;"id="pighead"  src="images/pig_head.png" alt="logo">
+		<img style="position: absolute;" id="pigstyle-text"  src="images/pigstyle_text.png" alt="logo">
+		<img style="position: absolute;" id="records-text"  style="width: 800px;" src="images/records_text.png" alt="logo">
+		<img style="position: absolute;" id="yellow-record"  src="images/yellow-record.png" alt="logo">
 
+ 
 
+		<div id="headers" style="font-size: 40px; color: white; position: absolute;" class="header">
+		<div>
+			<ul>
+			<li><a class="popup-link" data-content="Check out our collection of vinyl records, featuring a wide range of genres and artists.">Pick some new or used vinyls,</a></li>
+			<li><a class="popup-link" data-content="We also buy your vinyl records if you want to sell.">or whatever works for you,</a></li>
+			<li><a class="popup-link" data-content="We do consignment, selling your records for a commission.">while kicking back,</a></li>
+			<li><a class="popup-link" data-content="Enjoy the art and music together.">and soaking up art,</a></li>
+			<li><a class="popup-link" data-content="Visit us here for more info.">right here</a></li>
+			</ul>
+		</div>
+		</div>
 
-			<!-- Modal structure -->
-			<div class="modalOverlay" id="vinylOverlay">
-				<div id="modalBox">
-				<h1>Buy vinyls</h1>
+		
+		<div class="modalOverlay" id="vinylOverlay">
+		<div id="modalBox">
+			<h1 id="modalTitle">Title</h1>
+			<p id="modalContent">Content goes here</p>
+			<img src="images/vinyl_records.jpg" style="width: 95%; height:auto;" alt="Vinyl">
+			<button id="closeBtn">Close</button>
+		</div>
+		</div>
 
-				<p>Check out our collection of vinyl records, featuring a wide range of genres and artists. Whether you're a seasoned collector or just starting out, we have something for everyone. Browse through our selection and find your next favorite album today!</p>
-
-				<h1>Sell vinyls</h1>
-
-				<p>We buy your vinyl records</p>
-
-				<h1>Consignment</h1>
-
-				<p>We do consignment</p>
-
-				 <img 
-				 	src="images/vinyl_records.jpg" 
-				 	style="width: 95%; height: auto;" 
-					alt="logo"
-				>
-				<p></p>
-
-				<button id="closeBtn">Close</button>
-				</div>
-			</div>
 
 			 
-
-			<div id ="headers" 
-				style="font-size: 40px; color: white; position: absolute;" 
-				class="header">
-				<div>
-					<ul>
-						<li>
-							<a id="vinyls-link" >Pick some new or used vinyls,</a>
-						</li>
-						<li >
-							<a >or whatever works for you,</a>
-						</li>
-						<li class="selected">
-							<a >while kicking back,</a>
-						</li>
-						<li >
-							<a >and soaking up art,</a>
-						</li>
-						<li >
-							<a >right here</a>
-						</li>
-					</ul>
-					
-				</div>
-			</div>
-
 	</div>
 	 
 </body>
