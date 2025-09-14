@@ -93,10 +93,23 @@
 
 
 			openModal.addEventListener("click", function(event) {
-				alert("clicked");
 				event.preventDefault();          
 				modalOverlay.style.display = '';  
+
+				// Move modal box to center of viewport
+				const { innerWidth, innerHeight } = window;
+				const { offsetWidth, offsetHeight } = modalBox;
+
+
+				
+				modalBox.style.position = 'fixed';
+				modalBox.style.left = (innerWidth - offsetWidth) / 2 + 'px';
+				modalBox.style.top = (innerHeight - offsetHeight) / 2 + 'px';
+
 			});
+
+			 
+				
 			 
 		}
 		// Resize on load and on window resize
