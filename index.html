@@ -1,230 +1,83 @@
 <!DOCTYPE html>
-<!-- Website template by freewebsitetemplates.com -->
-<html>
+<html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<title>Gotta Love That Pig</title>
-	<link rel="stylesheet" href="css/style.css" type="text/css">
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
-	<script>
-
- 		function movePigStyleText() {
-			const img = document.getElementById("pigstyle-text");
- 			img.style.top = '0';
-			img.style.left = '50%';
-			img.style.transform = 'translateX(-50%)'; 
-		}
-
-		function moveRecordsText() {
-			const imgRecordText = document.getElementById("records-text");
-			const imgPigStyleText = document.getElementById("pigstyle-text");
-
-			imgRecordText.style.top = imgPigStyleText.offsetTop + imgPigStyleText.offsetHeight + 20 + 'px';
-			imgRecordText.style.left = '50%';
-			imgRecordText.style.transform = 'translateX(-50%)'; 
-		}
-
-		function movePigHead() {
-			const img = document.getElementById("pighead");
-			img.style.left = '50px';
-
-			img.style.top = '100%';
-			img.style.transform = 'translateY(-100%)'; 
-
-			moveyellowrecord()
-		}
-
-		function resizeImage() {
-			const img = document.getElementById("mainImage");
-			
-			img.style.height = window.innerHeight + "px";
-			img.style.width = window.innerWidth + "px";
-			
-		}
-
-		function moveyellowrecord() {
-			const imgRecord = document.getElementById("yellow-record");
-			
-			const imgPigHead = document.getElementById("pighead");
-
-
-			imgRecord.style.left = (imgPigHead.offsetLeft + imgPigHead.offsetWidth) + 'px';
-			imgRecord.style.bottom =   '200px';
-
-		}
-		function moveBulletedList(id) {
-			
-			const imgRecordText = document.getElementById("records-text");
-			const hdrs = document.getElementById("headers");
-
-			hdrs.style.top = imgRecordText.offsetTop + imgRecordText.offsetHeight + 20 + 'px';
-			hdrs.style.left = '50%';
-			hdrs.style.transform = 'translateX(-50%)'; 
-
-			
-   
-		}
-
- 
-		function resize(){
-
-			resizeImage();
-			movePigHead();
-			movePigStyleText();
-			moveRecordsText();
-			moveyellowrecord();
-			moveBulletedList();
-			 
-
-		}
-		function setupPopup() {
-  const links = document.querySelectorAll('.popup-link');
-  const overlay = document.getElementById('vinylOverlay');
-  const modalBox = document.getElementById('modalBox');
-  const titleElem = document.getElementById('modalTitle');
-  const contentElem = document.getElementById('modalContent');
-  const imageElem = document.getElementById('modalImage');
-  const closeBtn = document.getElementById('closeBtn');
-
-  overlay.style.display = 'none';
-
-  links.forEach(link => {
-    link.addEventListener('click', function(e) {
-      e.preventDefault();
-
-      // Get custom content from data attributes
-      const title = this.dataset.title;
-      const content = this.dataset.content;
-      const imgSrc = this.dataset.img;
-
-      // Update modal elements
-      titleElem.textContent = title;
-      contentElem.textContent = content;
-      imageElem.src = imgSrc;
-
-      // Show overlay
-      overlay.style.display = 'flex';
-
-      // Center modal
-      const { innerWidth, innerHeight } = window;
-      const { offsetWidth, offsetHeight } = modalBox;
-      modalBox.style.position = 'fixed';
-      modalBox.style.left = (innerWidth - offsetWidth)/2 + 'px';
-      modalBox.style.top = (innerHeight - offsetHeight)/2 + 'px';
-    });
-  });
-
-  // Close button
-  closeBtn.addEventListener('click', () => {
-    overlay.style.display = 'none';
-  });
-
-  // Close when clicking outside modal
-  overlay.addEventListener('click', (e) => {
-    if (e.target === overlay) overlay.style.display = 'none';
-  });
-}
-
-window.addEventListener('load', setupPopup);
-
-
-	 
-		// Resize on load and on window resize
-		window.addEventListener("load", resize);
-		window.addEventListener("resize", resize);
-
-
-		  
-
-	</script>
-
+  <meta charset="UTF-8">
+  <title>Gotta Love That Pig</title>
+  <link rel="stylesheet" href="css/style.css" type="text/css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
-	<div class="fullscreen-img-container">
-		<img style="position: absolute;" id="mainImage"  src="images/background.png" alt="logo">
-		<img style="position: absolute;"id="pighead"  src="images/pig_head.png" alt="logo">
-		<img style="position: absolute;" id="pigstyle-text"  src="images/pigstyle_text.png" alt="logo">
-		<img style="position: absolute;" id="records-text"  style="width: 800px;" src="images/records_text.png" alt="logo">
-		<img style="position: absolute;" id="yellow-record"  src="images/yellow-record.png" alt="logo">
+  <div class="fullscreen-img-container">
+    <!-- Background -->
+    <img id="mainImage" src="images/background.png" alt="logo">
 
-		
+    <!-- Overlay images -->
+    <div class="overlay">
+      <img id="pighead" src="images/pig_head.png" alt="Pig Head">
+      <img id="pigstyle-text" class="centered" src="images/pigstyle_text.png" alt="Pig Style">
+      <img id="records-text" class="centered below" src="images/records_text.png" alt="Records Text">
+      <img id="yellow-record" src="images/yellow-record.png" alt="Yellow Record">
+    </div>
 
+    <!-- Headers / Links -->
+    <div id="headers" class="centered-list">
+      <ul>
+        <li>
+          <a class="popup-link" 
+             data-title="Vinyl Records" 
+             data-content="Check out our collection of vinyl records, featuring a wide range of genres and artists." 
+             data-img="images/vinyl_records.jpg">
+            Stock up on vinyls,
+          </a>
+        </li>
+        <li>
+          <a class="popup-link" 
+             data-title="Cassettes" 
+             data-content="We also have a selection of classic cassette tapes for collectors." 
+             data-img="images/cassette-tapes.png">
+            or whatever works for you,
+          </a>
+        </li>
+        <li>
+          <a class="popup-link" 
+             data-title="Relaxing Spot" 
+             data-content="Enjoy the music in our comfortable recliners while you browse." 
+             data-img="images/recliner.png">
+            while kicking back,
+          </a>
+        </li>
+        <li>
+          <a class="popup-link" 
+             data-title="Visit Us" 
+             data-content="I am looking for cooperations with local artists to display their work in the store." 
+             data-img="images/art-in-record-store.png">
+            and soaking up art
+          </a>
+        </li>
+      </ul>
+    </div>
 
-		<div id="headers" style="font-size: 40px; color: white; position: absolute;" class="header">
-			<div>
-				<ul>
-				<li>
-					<a class="popup-link" 
-					data-title="Vinyl Records" 
-					data-content="Check out our collection of vinyl records, featuring a wide range of genres and artists." 
-					data-img="images/vinyl_records.jpg">
-					Stock up on vinyls,
-					</a>
-				</li>
-				
-				<li>
-					<a class="popup-link" 
-					data-title="Cassettes" 
-					data-content="We also have a selection of classic cassette tapes for collectors." 
-					data-img="images/cassette-tapes.png">
-					or whatever works for you,
-					</a>
-				</li>
-				<li>
-					<a class="popup-link" 
-					data-title="Relaxing Spot" 
-					data-content="Enjoy the music in our comfortable recliners while you browse." 
-					data-img="images/recliner.png">
-					while kicking back,
-					</a>
-				</li>
-				<li>
-					<a class="popup-link" 
-					data-title="Visit Us" 
-					data-content="I am looking for cooperations with local artists to display their work in the store." 
-					data-img="images/art-in-record-store.png">
-					and soaking up art
-					</a>
-				</li>
-				 
-				</ul>
-			</div>
-		</div>
-
-				<div id="storeInfo" style="position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); color: white; font-size: 24px; text-align: center;">
-			<p id="storeAddress">Address: 123 Music Lane, Vinyl City, VC 45678</p>
-			<p id="storeHours">Hours: Mon-Sat 10am - 8pm, Sun 12pm - 6pm</p>
-
-			<div id="socialIcons" style="margin-top: 10px;">
-  <a href="#" target="_blank" style="color: white; margin: 0 15px; font-size: 36px; text-decoration: none;">
-    <i class="fab fa-facebook"></i>
-  </a>
-  <a href="#" target="_blank" style="color: white; margin: 0 15px; font-size: 36px; text-decoration: none;">
-    <i class="fab fa-instagram"></i>
-  </a>
-</div>
-
-
-		</div>
-
-
-<!-- Single reusable modal -->
-<div class="modalOverlay" id="vinylOverlay">
-  <div id="modalBox">
-    <h1 id="modalTitle">Title</h1>
-    <p id="modalContent">Content goes here</p>
-    <img id="modalImage" src="" style="width: 95%; height:auto;" alt="Popup Image">
-    <button id="closeBtn">Close</button>
+    <!-- Store Info -->
+    <div id="storeInfo">
+      <p id="storeAddress">Address: 123 Music Lane, Vinyl City, VC 45678</p>
+      <p id="storeHours">Hours: Mon-Sat 10am - 8pm, Sun 12pm - 6pm</p>
+      <div id="socialIcons">
+        <a href="#" target="_blank"><i class="fab fa-facebook"></i></a>
+        <a href="#" target="_blank"><i class="fab fa-instagram"></i></a>
+      </div>
+    </div>
   </div>
-</div>
 
+  <!-- Popup -->
+  <div class="modalOverlay" id="vinylOverlay">
+    <div id="modalBox">
+      <h1 id="modalTitle">Title</h1>
+      <p id="modalContent">Content goes here</p>
+      <img id="modalImage" src="" alt="Popup Image">
+      <button id="closeBtn">Close</button>
+    </div>
+  </div>
 
-		 
-
-
-			 
-	</div>
-	 
+  <script src="js/script.js"></script>
 </body>
 </html>

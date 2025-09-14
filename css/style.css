@@ -1,59 +1,145 @@
 body, html {
-      margin: 0;
-      padding: 0;
-      overflow: hidden;
-      height: 100%;
-      width: 100%;
-	  background-color: black;
-    }
-    #mainImage {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      object-fit: cover; /* helps keep aspect ratio */
-    }
-	
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  background: black;
+  font-family: sans-serif;
+}
 
-   a {
-    color: white; /* any valid CSS color */
-  }
- 
- .modalOverlay {
-    display: 'none';  /* hidden by default */
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background: rgba(0,0,0,0.5);
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-  }
+#mainImage {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -1;
+}
 
-  /* Modal box */
-  #modalBox {
-    background: white;
-    padding: 20px;
-    border-radius: 8px;
-    text-align: center;
-    max-width: 400px;
-    width: 80%;
-  }
+/* Overlay images */
+.overlay img {
+  position: absolute;
+  max-width: 90%;
+  height: auto;
+}
 
-  #closeBtn {
-    margin-top: 10px;
-    padding: 5px 10px;
-    cursor: pointer;
-  }
+.centered {
+  left: 50%;
+  transform: translateX(-50%);
+}
 
-  #storeInfo {
+#pigstyle-text {
+  top: 20px;
+}
+
+#records-text {
+  top: 100px; /* stacked under pigstyle-text */
+}
+
+#pighead {
+  bottom: 100px;
+  left: 20px;
+  width: 120px;
+}
+
+#yellow-record {
+  bottom: 120px;
+  right: 20px;
+  width: 120px;
+}
+
+/* Headers / Links */
+.centered-list {
+  position: absolute;
+  top: 220px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 24px;
+  color: white;
+  text-align: center;
+}
+
+.centered-list ul {
+  list-style: none;
+  padding: 0;
+}
+
+.centered-list li {
+  margin: 10px 0;
+}
+
+.centered-list a {
+  color: white;
+  text-decoration: none;
+}
+
+/* Store Info */
+#storeInfo {
   position: absolute;
   bottom: 20px;
   left: 50%;
   transform: translateX(-50%);
   color: white;
-  font-size: 24px;
+  font-size: 18px;
   text-align: center;
+}
+
+#socialIcons {
+  margin-top: 10px;
+}
+
+#socialIcons a {
+  color: white;
+  margin: 0 15px;
+  font-size: 28px;
+  text-decoration: none;
+}
+
+/* Popup */
+.modalOverlay {
+  display: none;
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw; height: 100vh;
+  background: rgba(0,0,0,0.5);
+  justify-content: center;
+  align-items: center;
+}
+
+#modalBox {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
+  max-width: 400px;
+  width: 80%;
+}
+
+#modalImage {
+  width: 95%;
+  height: auto;
+}
+
+#closeBtn {
+  margin-top: 10px;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+/* ✅ Responsive tweaks */
+@media (max-width: 600px) {
+  #records-text {
+    top: 80px;
+    max-width: 80%;
+  }
+  #pighead, #yellow-record {
+    width: 80px;
+  }
+  .centered-list {
+    font-size: 18px;
+  }
+  #storeInfo {
+    font-size: 16px;
+  }
 }
