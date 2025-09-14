@@ -19,7 +19,7 @@ body, html {
     color: white; /* any valid CSS color */
   }
  
- #modalOverlay {
+ .modalOverlay {
     display: 'none';  /* hidden by default */
     position: fixed;
     top: 0;

@@ -74,7 +74,7 @@
 			 
 
 		}
-		function addPopupFunctionality() {
+		function addPopupFunctionality(id) {
 
 			
 
@@ -82,19 +82,19 @@
  
 
 			const closeBtn = document.getElementById("closeBtn");
-			const modalOverlay = document.getElementById("modalOverlay");
+			const modalOverlayElem = document.getElementById(id);
 
 
-			modalOverlay.style.display = 'none';  
+			modalOverlayElem.style.display = 'none';  
 			 
 			closeBtn.addEventListener("click", function() {
-				modalOverlay.style.display = 'none'; // hide the modal
+				modalOverlayElem.style.display = 'none'; // hide the modal
 			});
 
 
 			openModal.addEventListener("click", function(event) {
 				event.preventDefault();          
-				modalOverlay.style.display = '';  
+				modalOverlayElem.style.display = '';  
 
 				// Move modal box to center of viewport
 				const { innerWidth, innerHeight } = window;
@@ -117,7 +117,7 @@
 		window.addEventListener("resize", resize);
 
 
-		window.addEventListener("load", addPopupFunctionality);
+		window.addEventListener("load", () => addPopupFunctionality('vinylOverlay'));
 		  
 
 	</script>
@@ -134,7 +134,7 @@
 
 
 			<!-- Modal structure -->
-			<div id="modalOverlay">
+			<div class="modalOverlay" id="vinylOverlay">
 				<div id="modalBox">
 				<h1>Buy vinyls</h1>
 
