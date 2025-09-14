@@ -13,9 +13,7 @@ body, html {
       transform: translate(-50%, -50%);
       object-fit: cover; /* helps keep aspect ratio */
     }
-	img {
-  position: absolute;
-  } 
+	
 
    a {
     color: white; /* any valid CSS color */
