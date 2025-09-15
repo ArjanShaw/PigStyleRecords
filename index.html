@@ -126,18 +126,17 @@
 			});
 			}
 
-
+		function init() {
+			alert('init');
+			resize();
+			setupPopup();
+		}	
 
 	 
 		// Resize on load and on window resize
-		window.addEventListener('load', () => {setupPopup(); resize();	});
-		window.addEventListener("resize", () => {setupPopup(); resize();	});
-		document.addEventListener('DOMContentLoaded', () => {
-			  alert('DOMContentLoaded');
-			  setupPopup();  
-			  resize();
-			  
-			});
+		window.addEventListener('load', init);
+		window.addEventListener("resize", init);
+		document.addEventListener('DOMContentLoaded', init);
 
 		  
 
@@ -213,7 +212,7 @@
 				<a href="#" target="_blank" style="color: white; margin: 0 15px; font-size: 36px;">
 					<i class="fab fa-instagram"></i>
 				</a>
-				<p>1</p>
+				<p>2</p>
 			</div>
 
 		</div>
