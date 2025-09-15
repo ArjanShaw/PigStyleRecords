@@ -94,15 +94,11 @@
 				link.addEventListener('click', function (e) {
 					e.preventDefault();
 
-					// Get custom content from data attributes
-					const title = this.dataset.title;
-					const content = this.dataset.content;
-					const imgSrc = this.dataset.img;
-
+					  
 					// Update modal elements
-					titleElem.textContent = title;
-					contentElem.innerHTML = content; // ✅ Use innerHTML instead of textContent
-					imageElem.src = imgSrc;
+					titleElem.textContent = this.dataset.title;
+					contentElem.innerHTML = this.dataset.content; 
+					imageElem.src = this.dataset.img;
 
 					// Show overlay
 					overlay.style.display = 'flex';
@@ -162,43 +158,74 @@
 				<ul>
 					<li>
 						<a class="popup-link" data-title="Vinyl" data-content="
-<h2>Buy Vinyl</h2>
-Browse our wide selection of vinyl records, from classics to modern releases. Perfect for collectors and casual listeners.
+						<h2>Buy</h2>
+						
+						  Browse our wide selection of vinyl records, from classics to metal. 
+							Perfect for collectors and casual listeners.
+ 
+						<h2>Sell</h2>
+						Bring in your vinyl records to sell. 
+						We will give you a fair price.
 
-<h2>Sell Vinyl</h2>
-Bring in your vinyl records to sell or consign. We offer fair terms and visibility for your items.
+						<h2>Commission</h2>
+						We do commission sales of higher end records ($25+ expected sales price). 
+						This allows you to get a better price for your records.
+						Drop by to show us what you have!" 
 
-<h2>Commission Vinyl</h2>
-Submit requests for special orders or curated vinyl collections." data-img="images/vinyl_records.jpg">
+						data-img="images/vinyl_records.jpg">
 							Vinyl Records: Buy, Sell, Commission
 						</a>
 					</li>
 					<li>
-						<a class="popup-link" data-title="Gear" data-content="
-<h2>Buy Gear</h2>
-Explore turntables, speakers, and audio accessories suitable for beginners and audiophiles.
+						<a class="popup-link" data-title="Audio gear" data-content="
+						<h2>Buy</h2>
+						We carry turntables, speakers, boomboxes and other audio accessories suitable 
+						for beginners and audiophiles.
 
-<h2>Sell Gear</h2>
-Sell or consign your audio equipment with easy processing and fair terms." data-img="images/gear.jpg">
-							Audio Gear: Buy and Sell
+						<h2>Sell</h2>
+						Come in to get an offer on your gently used audio equipment." 
+						data-img="images/audio-gear.jpg">
+						Audio Gear: Buy and Sell
 						</a>
 					</li>
 					<li>
-						<a class="popup-link" data-title="Art" data-content="
-<h2>Buy Art</h2>
-Discover unique art pieces and collectibles from local artists in the store.
-
-<h2>Commission Art</h2>
-Artists can submit commissioned artwork for display or sale.
-
-
- 
-" data-img="images/art-in-record-store.png">
-							Art: Buy, Commission
+						<a 
+						class="popup-link" 
+						data-title="Art" 
+						data-content="
+						<h2>Buy</h2>
+						Discover unique art pieces and collectibles from local artists in the store.
+						<h2>Commission</h2>
+						Artists can submit commissioned artwork for display or sale.
+						<h2>Non-commercial installations</h2>
+						Let us know if you have ideas for sprucing up the store. 
+						We are big fans of the Lyric cinema in Fort Collins and 
+						we would love to get in touch if you have cool ideas for art installations.
+						It is a great opportunity for artists to get exposure. "
+						data-img="images/art-in-record-store.png">
+							Art: Buy, Sell, Non-commercial installations 
 						</a>
 					</li>
 					<li>
-						<a class="popup-link" data-title="Contact Us at PigStyle Records" data-content="
+						<a 
+						class="popup-link" 
+						data-content="
+						<h2>Hang out and listen</h2>
+						 Relax in our cozy seating while enjoying music and chatting with fellow vinyl 
+						 enthusiasts. Feel free to listen to any records you’re interested in 
+						 purchasing—get a better sense of the music and check for any wear or 
+						 damage on used vinyl.
+						 "
+						 data-img="images/recliner.png"
+						 >
+							Hang out and listen
+						</a>
+					</li>
+					<li>
+						<a 
+						class="popup-link" 
+						data-title="Contact Us at PigStyle Records" 
+						data-content="
 						<h2>Contact</h2>
 						Email: yourname@example.com<br>
 						Address: 123 Music Lane, Loveland, CO
@@ -215,25 +242,28 @@ Artists can submit commissioned artwork for display or sale.
 							allowfullscreen='' 
 							loading='lazy' 
 							referrerpolicy='no-referrer-when-downgrade'>
-						</iframe>" data-img="images/record-store-exterior.jpg">
+						</iframe>" 
+						data-img="images/record-store-exterior.jpg">
 							Contact
 						</a>
 					</li>
-
-
 					<li>
-						<a class="popup-link" data-title="Upcoming Events" data-content="
-					<h2>Events Calendar</h2>
-					Check out our upcoming events, including live music, open mic nights, and art displays. Plan your visit with our schedule below.
+						<a 
+						class="popup-link" 
+						data-title="Upcoming Events" 
+						data-content="
+						<h2>Events Calendar</h2>
+						Check out our upcoming events, including live music, open mic nights, and art displays. Plan your visit with our schedule below.
 					
-					<iframe 
-						src='https://calendar.google.com/calendar/embed?src=your_calendar_id%40group.calendar.google.com&ctz=America%2FDenver' 
-						style='border: 0' 
-						width='100%' 
-						height='400' 
-						frameborder='0' 
-						scrolling='no'>
-					</iframe>" data-img="images/record-store-exterior.jpg">
+						<iframe 
+							src='https://calendar.google.com/calendar/embed?src=your_calendar_id%40group.calendar.google.com&ctz=America%2FDenver' 
+							style='border: 0' 
+							width='100%' 
+							height='400' 
+							frameborder='0' 
+							scrolling='no'>
+						</iframe>" 
+						data-img="images/record-store-exterior.jpg">
 							Events
 						</a>
 					</li>
@@ -256,7 +286,7 @@ Artists can submit commissioned artwork for display or sale.
 				<a href="#" target="_blank" style="color: white; margin: 0 15px; font-size: 36px;">
 					<i class="fab fa-instagram"></i>
 				</a>
-				<p>5</p>
+				 
 			</div>
 
 		</div>

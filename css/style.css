@@ -1,4 +1,4 @@
-/* Base Styles */
+
 body, html {
   margin: 0;
   padding: 0;
@@ -48,7 +48,11 @@ a {
   box-shadow: 0 8px 30px rgba(0,0,0,0.5);
   position: relative;
 }
-
+#modalTitle {
+    font-size: 3rem; /* adjust as needed */
+    text-align: center;
+    margin-bottom: 20px;
+}
 /* Modal Header */
 #modalBox h1 {
   text-align: center;
@@ -65,7 +69,7 @@ a {
 
 /* Modal Content */
 #modalContent {
-  font-size: 1rem;
+  font-size: 1.5rem;
   line-height: 1.5;
 }
 
