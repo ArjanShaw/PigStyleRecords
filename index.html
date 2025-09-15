@@ -132,7 +132,11 @@
 		// Resize on load and on window resize
 		window.addEventListener('load', () => {setupPopup(); resize();	});
 		window.addEventListener("resize", () => {setupPopup(); resize();	});
-		document.addEventListener('DOMContentLoaded', () => {  setupPopup();  resize();});
+		document.addEventListener('DOMContentLoaded', () => {
+			  setupPopup();  
+			  resize();
+			  alert('DOMContentLoaded');
+			});
 
 		  
 
