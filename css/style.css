@@ -19,31 +19,53 @@ body, html {
     color: white; /* any valid CSS color */
   }
  
- .modalOverlay {
-    display: 'none';  /* hidden by default */
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background: rgba(0,0,0,0.5);
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-  }
+.modalOverlay {
+  display: none; /* hidden by default */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0,0,0,0.5);
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
 
-  /* Modal box */
-  #modalBox {
-    background: white;
-    padding: 20px;
-    border-radius: 8px;
-    text-align: center;
-    max-width: 400px;
-    width: 80%;
-  }
+#modalBox {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  max-width: 700px;
+  width: 90%;
+  max-height: 90%;
+  overflow-y: auto;
+  text-align: left;
+}
+#modalBox h1 {
+  text-align: center;
+  margin-bottom: 20px;
+}
 
-  #closeBtn {
-    margin-top: 10px;
-    padding: 5px 10px;
-    cursor: pointer;
-  }
+#modalImage {
+  float: left;
+  max-width: 40%;
+  height: auto;
+  margin: 0 20px 20px 0;
+}
+
+#modalContent {
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.modalFooter {
+  clear: both; /* makes sure button sits under text + image */
+  text-align: center;
+  margin-top: 20px;
+}
+
+#closeBtn {
+  padding: 8px 16px;
+  cursor: pointer;
+}
