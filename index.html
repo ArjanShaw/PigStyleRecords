@@ -79,61 +79,60 @@
 
 		}
 		function setupPopup() {
-  const links = document.querySelectorAll('.popup-link');
-  const overlay = document.getElementById('vinylOverlay');
-  const modalBox = document.getElementById('modalBox');
-  const titleElem = document.getElementById('modalTitle');
-  const contentElem = document.getElementById('modalContent');
-  const imageElem = document.getElementById('modalImage');
-  const closeBtn = document.getElementById('closeBtn');
+			const links = document.querySelectorAll('.popup-link');
+			const overlay = document.getElementById('vinylOverlay');
+			const modalBox = document.getElementById('modalBox');
+			const titleElem = document.getElementById('modalTitle');
+			const contentElem = document.getElementById('modalContent');
+			const imageElem = document.getElementById('modalImage');
+			const closeBtn = document.getElementById('closeBtn');
 
-  overlay.style.display = 'none';
+  			overlay.style.display = 'none';
 
-  links.forEach(link => {
-    link.addEventListener('click', function(e) {
-      e.preventDefault();
+			links.forEach(link => {
+				link.addEventListener('click', function(e) {
+				e.preventDefault();
 
-      // Get custom content from data attributes
-      const title = this.dataset.title;
-      const content = this.dataset.content;
-      const imgSrc = this.dataset.img;
+				// Get custom content from data attributes
+				const title = this.dataset.title;
+				const content = this.dataset.content;
+				const imgSrc = this.dataset.img;
 
-      // Update modal elements
-      titleElem.textContent = title;
-      contentElem.textContent = content;
-      imageElem.src = imgSrc;
+				// Update modal elements
+				titleElem.textContent = title;
+				contentElem.textContent = content;
+				imageElem.src = imgSrc;
 
-      // Show overlay
-      overlay.style.display = 'flex';
+				// Show overlay
+				overlay.style.display = 'flex';
 
-      // Center modal
-      const { innerWidth, innerHeight } = window;
-      const { offsetWidth, offsetHeight } = modalBox;
-      modalBox.style.position = 'fixed';
-      modalBox.style.left = (innerWidth - offsetWidth)/2 + 'px';
-      modalBox.style.top = (innerHeight - offsetHeight)/2 + 'px';
-    });
-  });
+				// Center modal
+				const { innerWidth, innerHeight } = window;
+				const { offsetWidth, offsetHeight } = modalBox;
+				modalBox.style.position = 'fixed';
+				modalBox.style.left = (innerWidth - offsetWidth)/2 + 'px';
+				modalBox.style.top = (innerHeight - offsetHeight)/2 + 'px';
+				});
+			});
 
-  // Close button
-  closeBtn.addEventListener('click', () => {
-    overlay.style.display = 'none';
-  });
+			// Close button
+			closeBtn.addEventListener('click', () => {
+				overlay.style.display = 'none';
+			});
 
-  // Close when clicking outside modal
-  overlay.addEventListener('click', (e) => {
-    if (e.target === overlay) overlay.style.display = 'none';
-  });
-}
+			// Close when clicking outside modal
+			overlay.addEventListener('click', (e) => {
+				if (e.target === overlay) overlay.style.display = 'none';
+			});
+			}
 
-window.addEventListener('load', setupPopup);
 
 
 	 
 		// Resize on load and on window resize
-		window.addEventListener("load", resize);
-		window.addEventListener("resize", resize);
-
+		window.addEventListener('load', () => {setupPopup(); resize();	});
+		window.addEventListener("resize", () => {setupPopup(); resize();	});
+		document.addEventListener('DOMContentLoaded', () => {  setupPopup();  resize();});
 
 		  
 
