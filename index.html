@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <!-- Website template by freewebsitetemplates.com -->
 <html>
+
 <head>
 	<meta charset="UTF-8">
 	<title>PigStyle Records Loveland</title>
@@ -9,11 +10,11 @@
 
 	<script>
 
- 		function movePigStyleText() {
+		function movePigStyleText() {
 			const img = document.getElementById("pigstyle-text");
- 			img.style.top = '0';
+			img.style.top = '0';
 			img.style.left = '50%';
-			img.style.transform = 'translateX(-50%)'; 
+			img.style.transform = 'translateX(-50%)';
 		}
 
 		function moveRecordsText() {
@@ -22,7 +23,7 @@
 
 			imgRecordText.style.top = imgPigStyleText.offsetTop + imgPigStyleText.offsetHeight + 20 + 'px';
 			imgRecordText.style.left = '50%';
-			imgRecordText.style.transform = 'translateX(-50%)'; 
+			imgRecordText.style.transform = 'translateX(-50%)';
 		}
 
 		function movePigHead() {
@@ -30,44 +31,44 @@
 			img.style.left = '0px';
 
 			img.style.top = '100%';
-			img.style.transform = 'translateY(-100%)'; 
+			img.style.transform = 'translateY(-100%)';
 
 			moveyellowrecord()
 		}
 
 		function resizeImage() {
 			const img = document.getElementById("mainImage");
-			
+
 			img.style.height = window.innerHeight + "px";
 			img.style.width = window.innerWidth + "px";
-			
+
 		}
 
 		function moveyellowrecord() {
 			const imgRecord = document.getElementById("yellow-record");
-			
+
 			const imgPigHead = document.getElementById("pighead");
 
 
 			imgRecord.style.left = (imgPigHead.offsetLeft + imgPigHead.offsetWidth) + 'px';
-			imgRecord.style.bottom =   '200px';
+			imgRecord.style.bottom = '200px';
 
 		}
 		function moveBulletedList(id) {
-			
+
 			const imgRecordText = document.getElementById("records-text");
 			const hdrs = document.getElementById("headers");
 
 			hdrs.style.top = imgRecordText.offsetTop + imgRecordText.offsetHeight + 20 + 'px';
 			hdrs.style.left = '50%';
-			hdrs.style.transform = 'translateX(-50%)'; 
+			hdrs.style.transform = 'translateX(-50%)';
 
-			
-   
+
+
 		}
 
- 
-		function resize(){
+
+		function resize() {
 
 			resizeImage();
 			movePigHead();
@@ -75,92 +76,92 @@
 			moveRecordsText();
 			moveyellowrecord();
 			moveBulletedList();
-			 
+
 
 		}
 		function setupPopup() {
-    const links = document.querySelectorAll('.popup-link');
-    const overlay = document.getElementById('vinylOverlay');
-    const modalBox = document.getElementById('modalBox');
-    const titleElem = document.getElementById('modalTitle');
-    const contentElem = document.getElementById('modalContent');
-    const imageElem = document.getElementById('modalImage');
-    const closeBtn = document.getElementById('closeBtn');
+			const links = document.querySelectorAll('.popup-link');
+			const overlay = document.getElementById('vinylOverlay');
+			const modalBox = document.getElementById('modalBox');
+			const titleElem = document.getElementById('modalTitle');
+			const contentElem = document.getElementById('modalContent');
+			const imageElem = document.getElementById('modalImage');
+			const closeBtn = document.getElementById('closeBtn');
 
-    overlay.style.display = 'none';
+			overlay.style.display = 'none';
 
-    links.forEach(link => {
-        link.addEventListener('click', function(e) {
-            e.preventDefault();
+			links.forEach(link => {
+				link.addEventListener('click', function (e) {
+					e.preventDefault();
 
-            // Get custom content from data attributes
-            const title = this.dataset.title;
-            const content = this.dataset.content;
-            const imgSrc = this.dataset.img;
+					// Get custom content from data attributes
+					const title = this.dataset.title;
+					const content = this.dataset.content;
+					const imgSrc = this.dataset.img;
 
-            // Update modal elements
-            titleElem.textContent = title;
-            contentElem.innerHTML = content; // ✅ Use innerHTML instead of textContent
-            imageElem.src = imgSrc;
+					// Update modal elements
+					titleElem.textContent = title;
+					contentElem.innerHTML = content; // ✅ Use innerHTML instead of textContent
+					imageElem.src = imgSrc;
 
-            // Show overlay
-            overlay.style.display = 'flex';
+					// Show overlay
+					overlay.style.display = 'flex';
 
-            // Center modal
-            const { innerWidth, innerHeight } = window;
-            const { offsetWidth, offsetHeight } = modalBox;
-            modalBox.style.position = 'fixed';
-            modalBox.style.left = (innerWidth - offsetWidth)/2 + 'px';
-            modalBox.style.top = (innerHeight - offsetHeight)/2 + 'px';
-        });
-    });
+					// Center modal
+					const { innerWidth, innerHeight } = window;
+					const { offsetWidth, offsetHeight } = modalBox;
+					modalBox.style.position = 'fixed';
+					modalBox.style.left = (innerWidth - offsetWidth) / 2 + 'px';
+					modalBox.style.top = (innerHeight - offsetHeight) / 2 + 'px';
+				});
+			});
 
-    // Close button
-    closeBtn.addEventListener('click', () => {
-        overlay.style.display = 'none';
-    });
+			// Close button
+			closeBtn.addEventListener('click', () => {
+				overlay.style.display = 'none';
+			});
 
-    // Close when clicking outside modal
-    overlay.addEventListener('click', (e) => {
-        if (e.target === overlay) overlay.style.display = 'none';
-    });
-}
+			// Close when clicking outside modal
+			overlay.addEventListener('click', (e) => {
+				if (e.target === overlay) overlay.style.display = 'none';
+			});
+		}
 
 		function init() {
 			//alert('init');
 			resize();
 			setupPopup();
-		}	
+		}
 
-	 
+
 		// Resize on load and on window resize
 		window.addEventListener('load', init);
 		window.addEventListener("resize", init);
 		document.addEventListener('DOMContentLoaded', init);
 
-		  
+
 
 	</script>
 
 </head>
+
 <body>
 	<div class="fullscreen-img-container">
-		<img style="position: absolute;" id="mainImage"  src="images/background.png" alt="logo">
-		<img style="position: absolute;"id="pighead"  src="images/pig_head.png" alt="logo">
-		<img style="position: absolute;" id="pigstyle-text"  src="images/pigstyle_text.png" alt="logo">
-		<img style="position: absolute;" id="records-text"  style="width: 800px;" src="images/records_text.png" alt="logo">
-		<img style="position: absolute;" id="yellow-record"  src="images/yellow-record.png" alt="logo">
+		<img style="position: absolute;" id="mainImage" src="images/background.png" alt="logo">
+		<img style="position: absolute;" id="pighead" src="images/pig_head.png" alt="logo">
+		<img style="position: absolute;" id="pigstyle-text" src="images/pigstyle_text.png" alt="logo">
+		<img style="position: absolute;" id="records-text" style="width: 800px;" src="images/records_text.png"
+			alt="logo">
+		<img style="position: absolute;" id="yellow-record" src="images/yellow-record.png" alt="logo">
 
-		
+
 
 
 		<div id="headers" style="font-size: 40px; color: white; position: absolute;" class="header">
-    <div>
-        <ul>
-            <li>
-                <a class="popup-link" 
-                   data-title="Vinyl" 
-                   data-content="
+			<div>
+				<ul>
+					<li>
+						<a class="popup-link" data-title="Vinyl" data-content="
 <h2>Buy Vinyl</h2>
 Browse our wide selection of vinyl records, from classics to modern releases. Perfect for collectors and casual listeners.
 
@@ -168,71 +169,83 @@ Browse our wide selection of vinyl records, from classics to modern releases. Pe
 Bring in your vinyl records to sell or consign. We offer fair terms and visibility for your items.
 
 <h2>Commission Vinyl</h2>
-Submit requests for special orders or curated vinyl collections." 
-                   data-img="images/vinyl_records.jpg">
-                   Vinyl Records: Buy, Sell, Commission
-                </a>
-            </li>
-            <li>
-                <a class="popup-link" 
-                   data-title="Gear" 
-                   data-content="
+Submit requests for special orders or curated vinyl collections." data-img="images/vinyl_records.jpg">
+							Vinyl Records: Buy, Sell, Commission
+						</a>
+					</li>
+					<li>
+						<a class="popup-link" data-title="Gear" data-content="
 <h2>Buy Gear</h2>
 Explore turntables, speakers, and audio accessories suitable for beginners and audiophiles.
 
 <h2>Sell Gear</h2>
-Sell or consign your audio equipment with easy processing and fair terms." 
-                   data-img="images/gear.jpg">
-                   Audio Gear: Buy and Sell
-                </a>
-            </li>
-            <li>
-                <a class="popup-link" 
-                   data-title="Art" 
-                   data-content="
+Sell or consign your audio equipment with easy processing and fair terms." data-img="images/gear.jpg">
+							Audio Gear: Buy and Sell
+						</a>
+					</li>
+					<li>
+						<a class="popup-link" data-title="Art" data-content="
 <h2>Buy Art</h2>
 Discover unique art pieces and collectibles from local artists in the store.
 
 <h2>Commission Art</h2>
 Artists can submit commissioned artwork for display or sale.
 
-<h2>Events</h2>
-Attend art displays and exhibitions alongside live music events.
 
-<h2>Visit Our Store</h2>
-Come see our vinyl, gear, and art collections in Loveland, Colorado." 
-                   data-img="images/art-in-record-store.png">
-                   Art: Buy, Commission, Events, Visit
-                </a>
-            </li>
-			<li>
-    <a class="popup-link" 
-       data-title="Visit Our Store in Loveland" 
-       data-content="
-<h2>Visit Us in Store</h2>
-Come see our vinyl records, gear, and art collections in Loveland, Colorado. 
-Experience a cozy and welcoming environment while exploring music and art.
+ 
+" data-img="images/art-in-record-store.png">
+							Art: Buy, Commission
+						</a>
+					</li>
+					<li>
+						<a class="popup-link" data-title="Contact Us at PigStyle Records" data-content="
+						<h2>Contact</h2>
+						Email: yourname@example.com<br>
+						Address: 123 Music Lane, Loveland, CO
 
-<h2>Find Us Here</h2>
-<iframe 
-    src='https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3067.123456789012!2d-105.084321!3d40.397654!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x876c789abc12345%3A0xabcdef1234567890!2sLoveland%2C%20CO!5e0!3m2!1sen!2sus!4v1694765432109!5m2!1sen!2sus' 
-    width='100%' 
-    height='250' 
-    style='border:0;' 
-    allowfullscreen='' 
-    loading='lazy' 
-    referrerpolicy='no-referrer-when-downgrade'>
-</iframe>" 
-       data-img="images/record-store-exterior.jpg">
-       Visit Us in Store
-    </a>
-</li>
-        </ul>
-    </div>
-</div>
+						<h2>Find Us Here</h2>
+						Come see our vinyl records, gear, and art collections in Loveland, Colorado.
+						Experience a cozy and welcoming environment while exploring music and art.
+
+						<iframe 
+							src='https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3067.123456789012!2d-105.084321!3d40.397654!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x876c789abc12345%3A0xabcdef1234567890!2sLoveland%2C%20CO!5e0!3m2!1sen!2sus!4v1694765432109!5m2!1sen!2sus' 
+							width='100%' 
+							height='250' 
+							style='border:0;' 
+							allowfullscreen='' 
+							loading='lazy' 
+							referrerpolicy='no-referrer-when-downgrade'>
+						</iframe>" data-img="images/record-store-exterior.jpg">
+							Contact
+						</a>
+					</li>
 
 
-				<div id="storeInfo" style="position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); color: white; font-size: 24px; text-align: center;">
+					<li>
+						<a class="popup-link" data-title="Upcoming Events" data-content="
+					<h2>Events Calendar</h2>
+					Check out our upcoming events, including live music, open mic nights, and art displays. Plan your visit with our schedule below.
+					
+					<iframe 
+						src='https://calendar.google.com/calendar/embed?src=your_calendar_id%40group.calendar.google.com&ctz=America%2FDenver' 
+						style='border: 0' 
+						width='100%' 
+						height='400' 
+						frameborder='0' 
+						scrolling='no'>
+					</iframe>" data-img="images/record-store-exterior.jpg">
+							Events
+						</a>
+					</li>
+
+
+				</ul>
+			</div>
+		</div>
+
+
+		<div id="storeInfo"
+			style="position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); color: white; font-size: 24px; text-align: center;">
 			<p id="storeAddress">Address: 123 Music Lane, Vinyl City, VC 45678</p>
 			<p id="storeHours">Hours: Mon-Sat 10am - 8pm, Sun 12pm - 6pm</p>
 
@@ -252,23 +265,24 @@ Experience a cozy and welcoming environment while exploring music and art.
 		<div class="modalOverlay" id="vinylOverlay">
 			<div id="modalBox">
 				<h1 id="modalTitle">Title</h1>
-				
+
 				<img id="modalImage" src="" alt="Popup Image">
 				<p id="modalContent">Content goes here</p>
-				
+
 				<div class="modalFooter">
-				<button id="closeBtn">Close</button>
+					<button id="closeBtn">Close</button>
 				</div>
 			</div>
 		</div>
 
 
 
-		 
 
 
-			 
+
+
 	</div>
-	 
+
 </body>
+
 </html>
