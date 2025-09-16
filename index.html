@@ -134,6 +134,11 @@
 		window.addEventListener('load', init);
 		window.addEventListener("resize", init);
 		document.addEventListener('DOMContentLoaded', init);
+		document.addEventListener("visibilitychange", () => {
+		if (!document.hidden) {
+			resize();
+		}
+		});
 
 
 
