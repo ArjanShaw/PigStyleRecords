@@ -10,10 +10,10 @@ class Program
 {
     static void Main()
     {
-        // Input folder renamed to "Images"
-        string folderPath = Path.Combine(Directory.GetCurrentDirectory(), "Images");
+        // Input folder
+        string folderPath = Path.Combine(Directory.GetCurrentDirectory(), "Records");
 
-        // Output files one level higher (same folder as Program.cs)
+        // Output files (same level as Program.cs)
         string outputHtml = Path.Combine(Directory.GetCurrentDirectory(), "catalog.html");
         string outputCss = Path.Combine(Directory.GetCurrentDirectory(), "style.css");
         string outputJs = Path.Combine(Directory.GetCurrentDirectory(), "script.js");
@@ -33,11 +33,11 @@ class Program
 
         if (imageFiles.Count == 0)
         {
-            Console.WriteLine("⚠️ No image files found in the 'Images' folder.");
+            Console.WriteLine("⚠️ No image files found in the 'Records' folder.");
             return;
         }
 
-        Console.WriteLine("🛠 Optimizing images...\n");
+        Console.WriteLine("🛠 Optimizing images...");
         foreach (var file in imageFiles)
         {
             try { OptimizeImage(file, 1600); }
@@ -46,7 +46,7 @@ class Program
                 Console.WriteLine($"⚠️ Skipped {Path.GetFileName(file)}: {ex.Message}");
             }
         }
-        Console.WriteLine("\n✅ Image optimization complete.\n");
+        Console.WriteLine("✅ Image optimization complete.\n");
 
         // --- CSS ---
         string cssContent = @"
@@ -131,7 +131,7 @@ searchBox.addEventListener('input', () => {
                 title = parts[1];
             }
 
-            string imgSrc = Path.Combine("Images", Path.GetFileName(file)).Replace("\\", "/");
+            string imgSrc = Path.Combine("Records", Path.GetFileName(file)).Replace("\\", "/");
 
             html.AppendLine($"<div class='card highlight' data-info='{EscapeHtml((artist + " " + title).ToLower())}'>");
             html.AppendLine($"  <img src='{imgSrc}' alt='{EscapeHtml(title)}'>");
@@ -139,7 +139,7 @@ searchBox.addEventListener('input', () => {
             html.AppendLine($"    <h3>{EscapeHtml(title)}</h3>");
             html.AppendLine($"    <p>{EscapeHtml(artist)}</p>");
             html.AppendLine($"    <p class='price'>{price}</p>");
-            html.AppendLine($"  </div>");
+            html.AppendLine("  </div>");
             html.AppendLine("</div>");
         }
 
@@ -157,26 +157,19 @@ searchBox.addEventListener('input', () => {
 
     static void OptimizeImage(string filePath, int maxDimension)
     {
-        using (var image = Image.Load(filePath))
-        {
-            int width = image.Width;
-            int height = image.Height;
+        using var image = Image.Load(filePath);
+        int width = image.Width;
+        int height = image.Height;
 
-            if (width <= maxDimension && height <= maxDimension) return;
+        if (width <= maxDimension && height <= maxDimension) return;
 
-            float scale = (float)maxDimension / Math.Max(width, height);
-            int newWidth = (int)(width * scale);
-            int newHeight = (int)(height * scale);
-
-            image.Mutate(x => x.Resize(newWidth, newHeight));
-            var encoder = new JpegEncoder { Quality = 90 };
-            image.Save(filePath, encoder);
-        }
+        float scale = (float)maxDimension / Math.Max(width, height);
+        image.Mutate(x => x.Resize((int)(width * scale), (int)(height * scale)));
+        image.Save(filePath, new JpegEncoder { Quality = 90 });
     }
 
     static string EscapeHtml(string text)
     {
         return System.Net.WebUtility.HtmlEncode(text);
     }
-
 }
