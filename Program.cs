@@ -2,6 +2,7 @@
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Web;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Processing;
 using SixLabors.ImageSharp.Formats.Jpeg;
@@ -10,10 +11,8 @@ class Program
 {
     static void Main()
     {
-        // Input folder
         string folderPath = Path.Combine(Directory.GetCurrentDirectory(), "Records");
 
-        // Output files (same level as Program.cs)
         string outputHtml = Path.Combine(Directory.GetCurrentDirectory(), "catalog.html");
         string outputCss = Path.Combine(Directory.GetCurrentDirectory(), "style.css");
         string outputJs = Path.Combine(Directory.GetCurrentDirectory(), "script.js");
@@ -33,20 +32,17 @@ class Program
 
         if (imageFiles.Count == 0)
         {
-            Console.WriteLine("⚠️ No image files found in the 'Records' folder.");
+            Console.WriteLine("⚠️ No image files found in 'Records' folder.");
             return;
         }
 
-        Console.WriteLine("🛠 Optimizing images...");
+        Console.WriteLine("🛠 Optimizing images...\n");
         foreach (var file in imageFiles)
         {
             try { OptimizeImage(file, 1600); }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"⚠️ Skipped {Path.GetFileName(file)}: {ex.Message}");
-            }
+            catch (Exception ex) { Console.WriteLine($"⚠️ Skipped {Path.GetFileName(file)}: {ex.Message}"); }
         }
-        Console.WriteLine("✅ Image optimization complete.\n");
+        Console.WriteLine("\n✅ Image optimization complete.\n");
 
         // --- CSS ---
         string cssContent = @"
@@ -65,30 +61,17 @@ input[type='text'] { padding:10px; width:60%; max-width:400px; border-radius:6px
         string jsContent = @"
 const searchBox = document.getElementById('searchBox');
 const gallery = document.getElementById('gallery');
-
 searchBox.addEventListener('input', () => {
     const term = searchBox.value.toLowerCase();
     const cards = Array.from(gallery.children);
-
     if (!term) {
-        cards.forEach(card => {
-            card.classList.add('highlight');
-            card.classList.remove('not-highlight');
-        });
+        cards.forEach(card => { card.classList.add('highlight'); card.classList.remove('not-highlight'); });
     } else {
-        const matching = [];
-        const nonMatching = [];
+        const matching = [], nonMatching = [];
         cards.forEach(card => {
             const info = card.getAttribute('data-info');
-            if (info.includes(term)) {
-                card.classList.add('highlight');
-                card.classList.remove('not-highlight');
-                matching.push(card);
-            } else {
-                card.classList.remove('highlight');
-                card.classList.add('not-highlight');
-                nonMatching.push(card);
-            }
+            if (info.includes(term)) { card.classList.add('highlight'); card.classList.remove('not-highlight'); matching.push(card); }
+            else { card.classList.remove('highlight'); card.classList.add('not-highlight'); nonMatching.push(card); }
         });
         gallery.innerHTML = '';
         matching.forEach(c => gallery.appendChild(c));
@@ -131,7 +114,7 @@ searchBox.addEventListener('input', () => {
                 title = parts[1];
             }
 
-            string imgSrc = Path.Combine("Records", Path.GetFileName(file)).Replace("\\", "/");
+            string imgSrc = $"https://raw.githubusercontent.com/ArjanShaw/PigStyleRecords/main/Records/{Uri.EscapeDataString(Path.GetFileName(file))}";
 
             html.AppendLine($"<div class='card highlight' data-info='{EscapeHtml((artist + " " + title).ToLower())}'>");
             html.AppendLine($"  <img src='{imgSrc}' alt='{EscapeHtml(title)}'>");
@@ -139,7 +122,7 @@ searchBox.addEventListener('input', () => {
             html.AppendLine($"    <h3>{EscapeHtml(title)}</h3>");
             html.AppendLine($"    <p>{EscapeHtml(artist)}</p>");
             html.AppendLine($"    <p class='price'>{price}</p>");
-            html.AppendLine("  </div>");
+            html.AppendLine($"  </div>");
             html.AppendLine("</div>");
         }
 
@@ -150,6 +133,45 @@ searchBox.addEventListener('input', () => {
 
         File.WriteAllText(outputHtml, html.ToString(), Encoding.UTF8);
 
+        EbayDraftCsvGenerator ebayDraftCsvGenerator = new EbayDraftCsvGenerator();
+
+        ebayDraftCsvGenerator.Initialize();
+
+        foreach (var file in imageFiles)
+        {
+            string fileName = Path.GetFileNameWithoutExtension(file);
+            string artist = "Unknown Artist";
+            string title = fileName;
+
+            if (fileName.Contains(" - "))
+            {
+                var parts = fileName.Split(new[] { " - " }, 2, StringSplitOptions.None);
+                artist = parts[0];
+                title = parts[1];
+            }
+
+
+            ebayDraftCsvGenerator.AddDraft(
+                 action: "Draft",
+                 sku: "SF-FLYING-NUN",
+                 categoryId: "176985",
+                 title: "Sally Fields - The Flying Nun",
+                 upc: "",
+                 price: "99",
+                 quantity: "1",
+                 imageUrl: "https://raw.githubusercontent.com/ArjanShaw/PigStyleRecords/refs/heads/main/Records/Null%20Division%20-%20Parallel%20Universe.png",
+                 conditionId: "NEW",
+                 description: "<p><CENTER><H4>This is a draft listing for Sally Fields - The Flying Nun</H4></CENTER><P>No actual merchandise yet. Do not bid.</P>",
+                 format: "FixedPrice",
+                 shippingOption: "USPSMedia",
+                 shippingCost: "5.72"
+             );
+
+
+        }
+        ebayDraftCsvGenerator.Save("draft_listing.csv");
+
+ 
         Console.WriteLine($"✅ Gallery created: {outputHtml}");
         Console.WriteLine($"✅ Stylesheet created: {outputCss}");
         Console.WriteLine($"✅ Script created: {outputJs}");
@@ -157,19 +179,32 @@ searchBox.addEventListener('input', () => {
 
     static void OptimizeImage(string filePath, int maxDimension)
     {
-        using var image = Image.Load(filePath);
-        int width = image.Width;
-        int height = image.Height;
+        using (var image = Image.Load(filePath))
+        {
+            int width = image.Width;
+            int height = image.Height;
 
-        if (width <= maxDimension && height <= maxDimension) return;
+            if (width <= maxDimension && height <= maxDimension) return;
 
-        float scale = (float)maxDimension / Math.Max(width, height);
-        image.Mutate(x => x.Resize((int)(width * scale), (int)(height * scale)));
-        image.Save(filePath, new JpegEncoder { Quality = 90 });
+            float scale = (float)maxDimension / Math.Max(width, height);
+            int newWidth = (int)(width * scale);
+            int newHeight = (int)(height * scale);
+
+            image.Mutate(x => x.Resize(newWidth, newHeight));
+            var encoder = new JpegEncoder { Quality = 90 };
+            image.Save(filePath, encoder);
+        }
     }
 
     static string EscapeHtml(string text)
     {
         return System.Net.WebUtility.HtmlEncode(text);
+    }
+
+    static string EscapeCsv(string text)
+    {
+        if (text.Contains(",") || text.Contains("\""))
+            return "\"" + text.Replace("\"", "\"\"") + "\"";
+        return text;
     }
 }
