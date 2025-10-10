@@ -7,7 +7,6 @@ searchBox.addEventListener('input', () => {
     const cards = Array.from(gallery.children);
 
     if (!term) {
-        // Highlight all if search is empty
         cards.forEach(card => {
             card.classList.add('highlight');
             card.classList.remove('not-highlight');
@@ -27,7 +26,6 @@ searchBox.addEventListener('input', () => {
                 nonMatching.push(card);
             }
         });
-        // Reshuffle: matching first
         gallery.innerHTML = '';
         matching.forEach(c => gallery.appendChild(c));
         nonMatching.forEach(c => gallery.appendChild(c));

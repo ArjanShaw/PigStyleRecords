@@ -14,7 +14,7 @@ class Program
         string folderPath = Path.Combine(Directory.GetCurrentDirectory(), "Images");
 
         // Output files one level higher (same folder as Program.cs)
-        string outputHtml = Path.Combine(Directory.GetCurrentDirectory(), "gallery.html");
+        string outputHtml = Path.Combine(Directory.GetCurrentDirectory(), "catalog.html");
         string outputCss = Path.Combine(Directory.GetCurrentDirectory(), "style.css");
         string outputJs = Path.Combine(Directory.GetCurrentDirectory(), "script.js");
 
@@ -46,23 +46,19 @@ class Program
                 Console.WriteLine($"⚠️ Skipped {Path.GetFileName(file)}: {ex.Message}");
             }
         }
-
         Console.WriteLine("\n✅ Image optimization complete.\n");
 
         // --- CSS ---
         string cssContent = @"
-body { font-family: Arial, sans-serif; background: #111; color: #eee; text-align: center; }
-.search-container { margin: 20px auto; }
-input[type='text'] { padding: 10px; width: 60%; max-width: 400px; border-radius: 6px; border: none; font-size: 1rem; }
-.gallery { display: flex; flex-direction: column; gap: 20px; padding: 20px; }
-.card { display: flex; flex-direction: row; align-items: center; background: #222; border-radius: 12px; padding: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.5); transition: transform 0.2s, box-shadow 0.2s, opacity 0.3s; }
-.card.highlight { box-shadow: 0 0 15px 4px #0ff; transform: scale(1.02); opacity: 1; }
-.card.not-highlight { opacity: 0.5; }
-.card img { width: 150px; height: auto; border-radius: 8px; margin-right: 20px; }
-.card-info { display: flex; flex-direction: column; text-align: left; }
-.card-info h3, .card-info p { margin: 4px 0; }
-.price { color: #0f0; font-weight: bold; }
-";
+body { font-family: Arial, sans-serif; background: url('images/background.png') no-repeat center center fixed; background-size: cover; color: #eee; text-align: center; }
+.gallery-popup { display:flex; flex-direction:column; gap:20px; max-height:70vh; overflow-y:auto; padding:20px; }
+.card { display:flex; flex-direction:row; align-items:center; background:#222; border-radius:12px; padding:10px; box-shadow:0 0 10px rgba(0,0,0,0.5); transition: transform 0.2s, box-shadow 0.2s, opacity 0.3s; }
+.card img { width:120px; height:auto; border-radius:8px; margin-right:15px; }
+.card-info { display:flex; flex-direction:column; text-align:left; }
+.card-info h3, .card-info p { margin:4px 0; }
+.card.highlight { box-shadow:0 0 15px 4px #0ff; transform:scale(1.02); opacity:1; }
+.card.not-highlight { opacity:0.5; }
+input[type='text'] { padding:10px; width:60%; max-width:400px; border-radius:6px; border:none; font-size:1rem; margin-bottom:15px; }";
         File.WriteAllText(outputCss, cssContent, Encoding.UTF8);
 
         // --- JS ---
@@ -75,7 +71,6 @@ searchBox.addEventListener('input', () => {
     const cards = Array.from(gallery.children);
 
     if (!term) {
-        // Highlight all if search is empty
         cards.forEach(card => {
             card.classList.add('highlight');
             card.classList.remove('not-highlight');
@@ -95,13 +90,11 @@ searchBox.addEventListener('input', () => {
                 nonMatching.push(card);
             }
         });
-        // Reshuffle: matching first
         gallery.innerHTML = '';
         matching.forEach(c => gallery.appendChild(c));
         nonMatching.forEach(c => gallery.appendChild(c));
     }
-});
-";
+});";
         File.WriteAllText(outputJs, jsContent, Encoding.UTF8);
 
         // --- Build HTML ---
@@ -115,11 +108,14 @@ searchBox.addEventListener('input', () => {
         html.AppendLine("<link rel='stylesheet' href='style.css'>");
         html.AppendLine("</head>");
         html.AppendLine("<body>");
+        html.AppendLine("<header style='text-align:left; padding:10px;'>");
+        html.AppendLine("<a href='index.html'><img src='images/pigstyle_text.png' alt='PigStyle' style='height:60px; vertical-align:middle;'></a>");
+        html.AppendLine("</header>");
         html.AppendLine("<h1>🎵 Record Gallery</h1>");
         html.AppendLine("<div class='search-container'>");
         html.AppendLine("<input type='text' id='searchBox' placeholder='Search artist or record...'>");
         html.AppendLine("</div>");
-        html.AppendLine("<div class='gallery' id='gallery'>");
+        html.AppendLine("<div class='gallery-popup' id='gallery'>");
 
         foreach (var file in imageFiles)
         {
@@ -135,7 +131,6 @@ searchBox.addEventListener('input', () => {
                 title = parts[1];
             }
 
-            // Path relative to HTML (HTML is one level up, images are in Images/)
             string imgSrc = Path.Combine("Images", Path.GetFileName(file)).Replace("\\", "/");
 
             html.AppendLine($"<div class='card highlight' data-info='{EscapeHtml((artist + " " + title).ToLower())}'>");
@@ -145,7 +140,7 @@ searchBox.addEventListener('input', () => {
             html.AppendLine($"    <p>{EscapeHtml(artist)}</p>");
             html.AppendLine($"    <p class='price'>{price}</p>");
             html.AppendLine($"  </div>");
-            html.AppendLine($"</div>");
+            html.AppendLine("</div>");
         }
 
         html.AppendLine("</div>");
@@ -167,8 +162,7 @@ searchBox.addEventListener('input', () => {
             int width = image.Width;
             int height = image.Height;
 
-            if (width <= maxDimension && height <= maxDimension)
-                return;
+            if (width <= maxDimension && height <= maxDimension) return;
 
             float scale = (float)maxDimension / Math.Max(width, height);
             int newWidth = (int)(width * scale);
@@ -184,4 +178,5 @@ searchBox.addEventListener('input', () => {
     {
         return System.Net.WebUtility.HtmlEncode(text);
     }
+
 }
